@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Adaptive Mastering Platform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            /* General Styling */
+            body {
+                background-color: #f5f7fa;
+                font-family: 'Poppins', sans-serif;
+                line-height: 1.8;
+            }
+        
+            .section-heading {
+                text-align: center;
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: #010509;
+                text-transform: uppercase;
+            }
+        
+            /* Navbar */
+            .navbar {
+                background: linear-gradient(135deg, #020e1b, #0056b3);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+        
+            .navbar-brand {
+                font-weight: bold;
+                color: #fff !important;
+                font-size: 1.5rem;
+            }
+        
+            .nav-link {
+                color: white !important;
+                font-size: 1.1rem;
+                margin-right: 20px;
+                transition: color 0.3s ease, transform 0.3s ease;
+            }
+        
+            .nav-link:hover {
+                color: #ffd700 !important;
+                transform: scale(1.1);
+            }
+        
+            /* Hero Section */
+            header {
+                background: linear-gradient(135deg, #0056b3, #1e90ff, #030507);
+                color: white;
+                text-align: center;
+                padding: 100px 20px;
+                border-bottom: 5px solid #0056b3;
+                background-attachment: fixed;
+            }
+        
+            header h1 {
+                font-size: 4rem;
+                font-weight: bold;
+            }
+        
+            header p {
+                font-size: 1.3rem;
+                margin-bottom: 30px;
+            }
+        
+            .btn-primary {
+                background-color: #ffd700;
+                color: #000103;
+                border: none;
+                font-size: 1.2rem;
+                padding: 10px 25px;
+                border-radius: 30px;
+                transition: all 0.3s ease;
+            }
+        
+            .btn-primary:hover {
+                background-color: #ffc107;
+                transform: scale(1.1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+        
+            /* Features Section */
+            .card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border-radius: 15px;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+                background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            }
+        
+            .card:hover {
+                transform: translateY(-10px) scale(1.05);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                background: linear-gradient(135deg, #bbdefb, #90caf9);
+            }
+        
+            .card-title {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #0056b3;
+                text-transform: uppercase;
+            }
+        
+            .card-text {
+                font-size: 1.1rem;
+                color: #555;
+            }
+        
+            /* Footer */
+            footer {
+                background: linear-gradient(135deg, #343a40, #23272b);
+                color: white;
+                padding: 40px 0;
+                text-align: center;
+            }
+        
+            footer p {
+                margin: 0;
+                font-size: 0.9rem;
+            }
+        
+            footer a {
+                color: #ffd700;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+        
+            footer a:hover {
+                color: #ffc107;
+            }
+        
+            /* Responsive Styling */
+            @media (max-width: 992px) {
+                header h1 {
+                    font-size: 3.2rem;
+                }
+            }
+        
+            @media (max-width: 768px) {
+                header h1 {
+                    font-size: 2.5rem;
+                }
+        
+                header p {
+                    font-size: 1.1rem;
+                }
+        
+                .btn-primary {
+                    font-size: 1rem;
+                    padding: 8px 20px;
+                }
+            }
+        
+            @media (max-width: 576px) {
+                .navbar-brand {
+                    font-size: 1.2rem;
+                }
+        
+                .nav-link {
+                    font-size: 1rem;
+                }
+        
+                footer {
+                    font-size: 0.8rem;
+                }
+            }
+        </style>
+</head>
+<body>
+    <header class="text-center">
+        <h1 class="header-text"> An Adaptive Learning Platform</h1>
+        <p class="lead lead-text">Empowering Neurodiverse and Special-Needs Students</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria -label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" id="about" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#benefits">Benefits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact" data-toggle="modal" data-target="#contactModal">Contact us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <section id="about">
+            <h2>About the Platform</h2>
+            <p>The proposed solution is A personalized adaptive mastering platform designed to address the diverse instructional needs of neurodiverse and special-needs students, including individuals with ADHD, autism, and dyslexia.</p>
+            <p>This platform leverages to create personalized learning profiles for each student by capturing data on their cognitive, sensory, and emotional responses.</p>
+        </section>
+
+        <section id="features" class="mt-4">
+            <h2>Features</h2>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Multi-modal Content</h5>
+                            <p class="card-text">Videos, interactive simulations, gamified tasks, and audio-based training.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Customizable Interface</h5>
+                            <p class="card-text">Interface to match sensory preferences.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"> Supportive Features</h5>
+                            <p class="card-text">Text-to-speech and dyslexia-friendly fonts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="mt-4">
+            <h2>Benefits</h2>
+            <p>By tailoring the learning experience to individual needs, the platform fosters a supportive atmosphere where students can thrive academically and personally.</p>
+        </section>
+
+        <section class="mt-4 text-center">
+            <h2 class="display-4 text-success">Get Started</h2>
+            <button id="startButton" class="btn btn-success btn-lg shadow-lg">Start Learning</button>
+        </section>
+        
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 Adaptive Learning Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" id=" message" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+         
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

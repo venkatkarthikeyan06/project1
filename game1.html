@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #fff;
+        }
+        #winMessage {
+            display: none;
+            font-size: 2em;
+            color: green;
+            position: absolute;
+            top: 20px;
+        }
+        #exitButton, #newMazeButton {
+            position: absolute;
+            top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #exitButton {
+            right: 20px;
+        }
+        #newMazeButton {
+            left: 20px;
+        }
+        #moveCounter {
+            position: absolute;
+            top: 70px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mazeCanvas" width="400" height="400"></canvas>
+    <div id="winMessage">You win!</div>
+    <div id="moveCounter">Moves: 0</div>
+    <button id="exitButton" onclick="exitGame()">Exit</button>
+    <button id="newMazeButton" onclick="generateNewMaze()">Generate New Maze</button>
+    <button id="showScoresButton" onclick="fetchScores()">Show Top Scores</button>
+<div id="scoresList"></div>
+
+<script>
+async function fetchScores() {
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) throw new Error('User not authenticated');
+
+        const response = await fetch('http://localhost:5000/api/scores', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            console.error('Error fetching scores:', error.error);
+            return;
+        }
+
+        const scores = await response.json();
+        const scoresList = document.getElementById('scoresList');
+        scoresList.innerHTML = scores
+            .map(s => `<p>${s.username}: ${s.score} (Date: ${new Date(s.date).toLocaleString()})</p>`)
+            .join('');
+    } catch (error) {
+        console.error('Error fetching scores:', error.message);
+    }
+}
+</script>
+
+    <script>
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        const moveCounterDisplay = document.getElementById('moveCounter');
+        let level = 1;
+        let mazeSize = 5;
+        let cellSize = canvas.width / mazeSize;
+        let maze = generateMaze(mazeSize);
+        let player = { x: 0, y: 0 };
+        let moveCount = 0;
+
+        // Fetch username from the server
+        let username = ''; // Declare a global username variable
+
+        async function login(email, password) {
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    // Store the token in localStorage
+                    localStorage.setItem('authToken', data.token);
+                    console.log('Token stored:', data.token);
+                    console.log(`Logged in as: ${data.username}`);
+                } else {
+                    const errorData = await response.json();
+                    console.error(`Login failed: ${errorData.error}`);
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+        }
+        
+        async function fetchUsername() {
+            try {
+                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+                if (!token) {
+                    console.error('No authentication token found. Please log in.');
+                    alert('You are not logged in. Redirecting to login page...');
+                    // Optional: Redirect to login page
+                    // window.location.href = '/login.html';
+                    return; // Exit the function
+                }
+        
+                console.log('Token found:', token);
+        
+                const response = await fetch('http://localhost:5000/getProfile', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Use the token for authentication
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch profile: ${response.statusText}`);
+                }
+        
+                const data = await response.json();
+                const username = data.username; // Dynamically assign the username
+                console.log(`Username loaded: ${username}, Level: ${data.level}`);
+            } catch (error) {
+                console.error(error.message);
+                const username = 'Guest'; // Default username if fetching fails
+                console.log('Using default username: Guest');
+            }
+        }
+        
+        
+        
+
+        async function levelUp() {
+            level++;
+            mazeSize += 5;
+            cellSize = canvas.width / mazeSize;
+            maze = generateMaze(mazeSize);
+            player = { x: 0, y: 0 };
+            moveCount = 0; // Reset move counter
+            moveCounterDisplay.textContent = `Moves: ${moveCount}`;
+            drawMaze();
+            document.getElementById('winMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('winMessage').style.display = 'none';
+            }, 2000);
+        
+            // Update level on the server
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) throw new Error('User not authenticated');
+        
+                const response = await fetch('http://localhost:5000/updateLevel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ level }),
+                });
+        
+                if (!response.ok) {
+                    const error = await response.json();
+                    console.error('Error updating level:', error.error);
+                }
+        
+                // Save the score on the server
+                const scoreResponse = await fetch('http://localhost:5000/api/score', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ score: level * 100 - moveCount }),
+                });
+        
+                if (!scoreResponse.ok) {
+                    const error = await scoreResponse.json();
+                    console.error('Error saving score:', error.error);
+                }
+            } catch (error) {
+                console.error('Error during level up:', error.message);
+            }
+        }
+        
+
+        function generateMaze(size) {
+            const maze = Array(size).fill().map(() => Array(size).fill(0));
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    maze[i][j] = Math.random() > 0.7 ? 1 : 0;
+                }
+            }
+            maze[0][0] = 0;
+            maze[size - 1][size - 1] = 0;
+            return maze;
+        }
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < mazeSize; i++) {
+                for (let j = 0; j < mazeSize; j++) {
+                    if (maze[i][j] === 1) {
+                        ctx.fillStyle = '#000';
+                        ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+            // Highlight start point
+            ctx.fillStyle = '#0f0';
+            ctx.fillRect(0, 0, cellSize, cellSize);
+            // Highlight end point
+            ctx.fillStyle = '#f00';
+            ctx.fillRect((mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
+            // Draw player
+            ctx.fillStyle = '#00f';
+            ctx.fillRect(player.x * cellSize, player.y * cellSize, cellSize, cellSize);
+        }
+
+        function movePlayer(dx, dy) {
+            const newX = player.x + dx;
+            const newY = player.y + dy;
+            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 0) {
+                player.x = newX;
+                player.y = newY;
+                moveCount++;
+                moveCounterDisplay.textContent = `Moves: ${moveCount}`;
+                drawMaze();
+                if (player.x === mazeSize - 1 && player.y === mazeSize - 1) {
+                    levelUp();
+                }
+            }
+        }
+
+        function exitGame() {
+            document.body.innerHTML = '<h1>Game Over</h1>';
+        }
+
+        function generateNewMaze() {
+            maze = generateMaze(mazeSize);
+            player = { x: 0, y: 0 };
+            moveCount = 0; // Reset move counter
+            moveCounterDisplay.textContent = `Moves: ${moveCount}`;
+            drawMaze();
+            document.getElementById('winMessage').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        // Initialize game
+        fetchUsername().then(() => {
+            drawMaze();
+        });
+    </script>
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

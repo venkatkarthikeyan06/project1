@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive E-Learning Videos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9; /* Maintain a 16:9 aspect ratio */
+            border: none;
+        }
+
+        .video-card .description {
+            padding: 1.5rem;
+        }
+
+        .description h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.8rem;
+            color: #2575fc;
+        }
+
+        .description p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        footer {
+            background-color: #6a11cb;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 1rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Interactive E-Learning Videos</h1>
+        <p>Explore engaging videos that enhance learning through interactivity.</p>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Video 1 -->
+            <div class="col-md-6">
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/adLj6kygwds" title="Newton's Laws" allowfullscreen></iframe>
+                    <div class="description">
+                        <h3>Newton's Laws</h3>
+                        <p>Explore Newton's laws of motion with interactive visualizations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="col-md-6">
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/d5kW4pI_VQw" title="Branching Scenarios in Education" allowfullscreen></iframe>
+                    <div class="description">
+                        <h3>Branching Scenarios in Education</h3>
+                        <p>Learn how branching scenarios enable learners to make choices and explore consequences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="col-md-6">
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/Xtp0CMb3afQ?si=DhVZ_zZa7iZEOuqT" title="Interactive Science Experiments" allowfullscreen></iframe>
+                    <div class="description">
+                        <h3>Interactive Science Experiments</h3>
+                        <p>Experience science experiments virtually and interactively.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="col-md-6">
+                <div class="video-card">
+                    <iframe src="https://www.youtube.com/embed/3pjkQcQBTtc" title="Creative Problem-Solving" allowfullscreen></iframe>
+                    <div class="description">
+                        <h3>Creative Problem-Solving</h3>
+                        <p>Engage in interactive scenarios to enhance problem-solving skills.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Interactive E-Learning Videos. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

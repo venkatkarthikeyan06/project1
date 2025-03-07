@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Accuracy Checker with Time Limit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        body {
+            background: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .heading {
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 5px rgba(0, 123, 255, 0.1);
+        }
+
+        .expected-text {
+            font-size: 1.3rem;
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* Gradient Button */
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #003366);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #a9c0ff;
+        }
+
+        /* Speech Result Styling */
+        .result {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .score {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #28a745;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            font-size: 1rem;
+            color: #ff6347;
+        }
+
+        /* Difficulty Section */
+        .difficulty-level {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .difficulty-info {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            text-align: center;
+            color: #28a745;
+        }
+
+        /* Card Styling with Hover Effect */
+        .card {
+            border-radius: 15px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Header Animation */
+        .heading {
+            animation: slideIn 1.5s ease-out;
+        }
+
+        /* Speech Recognition Styling */
+        #feedback {
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        #feedback:hover {
+            color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Add Gradient background to container */
+        .container {
+            background: linear-gradient(145deg, #e0e7ff, #b0c4ff);
+        }
+
+        /* Hover effects on feedback and score */
+        .score:hover {
+            color: #28a745;
+            text-shadow: 1px 1px 3px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Animation for header */
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .heading {
+                font-size: 1.8rem;
+            }
+
+            .expected-text {
+                font-size: 1rem;
+            }
+
+            .btn-primary {
+                font-size: 1rem;
+                padding: 10px 25px;
+            }
+
+            .score {
+                font-size: 1.3rem;
+            }
+
+            .difficulty-level {
+                font-size: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="heading">Speech Training</h2>
+    <p id="text-to-speak" class="expected-text">Please say the following text:</p>
+    <p id="expected-text" class="text-center"><strong>Level 1: Hello, how are you today?</strong></p>
+    
+    <button id="start-btn" class="btn btn-primary w-100">Start Speaking</button>
+    
+    <!-- Timer Display -->
+    <div id="timer" class="text-center mt-3">
+        <p>Time remaining: <span id="time-remaining">15</span> seconds</p>
+    </div>
+
+    <div id="result" class="result text-center mt-4">
+        <p id="feedback">Speak the above text and I will check your accuracy!</p>
+        <p class="score" id="score"></p>
+        <p class="difficulty-level" id="difficulty-level"></p>
+    </div>
+</div>
+
+<script>
+    // Initialize speech recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    // Define texts for different difficulty levels
+    const texts = [
+        "Hello how are you today", // Level 1
+        "The quick brown fox jumps over the lazy dog.", // Level 2
+        "Once upon a time, in a land far, far away, there lived a wise old man who had seen much of the world and experienced many adventures.", // Level 3
+        "In the digital age, artificial intelligence is revolutionizing the way we interact with technology, from automated systems to complex algorithms transforming industries.", // Level 4
+        "Climate change is one of the most significant challenges facing the world today. It affects ecosystems, communities, and economies, and requires immediate and coordinated global action." // Level 5
+    ];
+
+    let currentLevel = 0; // Start with level 0
+    const startBtn = document.getElementById('start-btn');
+    const resultDiv = document.getElementById('result');
+    const feedback = document.getElementById('feedback');
+    const scoreElement = document.getElementById('score');
+    const expectedTextElement = document.getElementById('expected-text');
+    const difficultyLevelElement = document.getElementById('difficulty-level');
+    const timeRemainingElement = document.getElementById('time-remaining');
+    let countdownTimer;
+    let remainingTime = 15;
+
+    // Display the current text for the user to speak
+    function updateText() {
+        expectedTextElement.innerHTML = `<strong>Level ${currentLevel + 1}: ${texts[currentLevel]}</strong>`;
+    }
+
+    // Start listening for speech when the button is clicked
+    startBtn.addEventListener('click', () => {
+        recognition.start();
+        feedback.textContent = "Listening... Please speak now.";
+        startBtn.disabled = true;
+        startTimer();
+    });
+
+    // When speech is recognized
+    recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript;
+        feedback.textContent = "You said: " + spokenText;
+        const accuracy = compareText(spokenText, texts[currentLevel]);
+        scoreElement.textContent = `Your accuracy score: ${accuracy}%`;
+
+        if (accuracy >= 50) {
+            feedback.textContent += " (Good job! You've passed this level.)";
+            difficultyLevelElement.textContent = `Next level coming up...`;
+            setTimeout(() => {
+                currentLevel++;
+                if (currentLevel < texts.length) {
+                    updateText();
+                    feedback.textContent = "Please say the next text.";
+                    difficultyLevelElement.textContent = `Level ${currentLevel + 1}`;
+                    startBtn.disabled = false;
+                } else {
+                    feedback.textContent = "Congratulations! You've completed all levels.";
+                    difficultyLevelElement.textContent = "End of the test.";
+                    startBtn.disabled = true;
+                }
+            }, 2000);
+        } else {
+            feedback.textContent += " (Try again!)";
+            startBtn.disabled = false;
+        }
+
+        stopTimer(); // Stop the timer when speech is recognized
+    };
+
+    // Compare the spoken text with the expected text
+    function compareText(spokenText, expectedText) {
+        const normalizedSpokenText = spokenText.toLowerCase().trim();
+        const normalizedExpectedText = expectedText.toLowerCase().trim();
+
+        let commonLength = 0;
+        const maxLength = Math.max(normalizedSpokenText.length, normalizedExpectedText.length);
+
+        for (let i = 0; i < maxLength; i++) {
+            if (normalizedSpokenText[i] === normalizedExpectedText[i]) {
+                commonLength++;
+            }
+        }
+
+        const accuracy = (commonLength / normalizedExpectedText.length) * 100;
+        return accuracy.toFixed(2);
+    }
+
+    // Start the countdown timer
+    function startTimer() {
+        remainingTime = 15;
+        timeRemainingElement.textContent = remainingTime;
+
+        countdownTimer = setInterval(() => {
+            remainingTime--;
+            timeRemainingElement.textContent = remainingTime;
+
+            if (remainingTime <= 0) {
+                stopTimer();
+                recognition.stop(); // Stop recognition after 15 seconds
+                feedback.textContent = "Time's up! Please try again.";
+                startBtn.disabled = false;
+            }
+        }, 1000);
+    }
+
+    // Stop the countdown timer
+    function stopTimer() {
+        clearInterval(countdownTimer);
+    }
+
+    // Error handling for speech recognition
+    recognition.onerror = (event) => {
+        feedback.textContent = "Error occurred: " + event.error;
+        startBtn.disabled = false;
+        stopTimer();
+    };
+
+    // Initialize the first level text
+    updateText();
+</script>
+<script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

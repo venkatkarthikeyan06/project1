@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio-Based Training for Diverse Learning Styles</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+            padding-top: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        .form-section {
+            background:#a9c0ff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            border: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0056b3, #003f7f);
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lead {
+            font-style: italic;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Audio-Based Training for Diverse Learning Styles</h1>
+    <p class="lead">Engage with audio content and test your knowledge seamlessly.</p>
+</header>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="form-section">
+                <h2 class="text-center">Audio Training Module - Level <span id="level">1</span></h2>
+                <audio id="audioPlayer" class="w-100 mt-3 mb-4" controls>
+                    <source id="audioSource" src="Environmental protection.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <div id="questions" class="mt-4" style="display: none;">
+                    <h3 class="mb-3">Questions</h3>
+                    <form id="quizForm">
+                        <div class="mb-4">
+                            <label class="form-label">1. What was the main topic discussed in the audio?</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="a" id="q1a">
+                                <label class="form-check-label" for="q1a">A. Topic A</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="b" id="q1b">
+                                <label class="form-check-label" for="q1b">B. Topic B</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="c" id="q1c">
+                                <label class="form-check-label" for="q1c">C. Topic C</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="d" id="q1d">
+                                <label class="form-check-label" for="q1d">D. Topic D</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">2. Which of the following is a key point mentioned?</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="a" id="q2a">
+                                <label class="form-check-label" for="q2a">A. Key Point 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="b" id="q2b">
+                                <label class="form-check-label" for="q2b">B. Key Point 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="c" id="q2c">
+                                <label class="form-check-label" for="q2c">C. Key Point 3</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="d" id="q2d">
+                                <label class="form-check-label" for="q2d">D. Key Point 4</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Contact us: support@example.com | Phone: (123) 456-7890</p>
+</footer>
+
+<script>
+    let currentLevel = 1;
+    const audio = document.getElementById('audioPlayer');
+    const questionsDiv = document.getElementById('questions');
+    const levelSpan = document.getElementById('level');
+    const audioSource = document.getElementById('audioSource');
+
+    // Define levels and their corresponding audio files and questions
+    const levels = [
+        {
+            audio: 'Environmental protection.mp3',
+            correctAnswers: { q1: 'a', q2: 'b' }
+        },
+        {
+            audio: 'Tel6.mp3',
+            correctAnswers: { q1: 'c', q2: 'd' }
+        },
+        {
+            audio: 'Renewable energy.mp3',
+            correctAnswers: { q1: 'b', q2: 'a' }
+        }
+    ];
+
+    // Display questions when the audio ends
+    audio.addEventListener('ended', function() {
+        questionsDiv.style.display = 'block';
+    });
+
+    // Handle quiz form submission
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let score = 0;
+        const totalQuestions = 2; // Total number of questions
+
+        const currentAnswers = levels[currentLevel - 1].correctAnswers;
+        if (document.querySelector('input[name="q1"]:checked')?.value === currentAnswers.q1) {
+            score++;
+        }
+        if (document.querySelector('input[name="q2"]:checked')?.value === currentAnswers.q2) {
+            score++;
+        }
+
+        const percentage = (score / totalQuestions) * 100;
+        if (percentage >= 40) {
+            alert('Congratulations! You scored ' + percentage + '%. Proceeding to the next level...');
+
+            // Move to the next level if available
+            if (currentLevel < levels.length) {
+                currentLevel++;
+                levelSpan.textContent = currentLevel;
+                audioSource.src = levels[currentLevel - 1].audio;
+                audio.load();
+                questionsDiv.style.display = 'none';
+                document.getElementById('quizForm').reset();
+            } else {
+                alert('Congratulations! You have completed all levels.');
+            }
+        } else {
+            alert('You scored ' + percentage + '%. Keep trying!');
+        }
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Modal Content</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #010509;
+            text-transform: uppercase;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #020e1b, #0056b3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-right: 20px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler {
+            border-color: #fff;
+        }
+
+        /* Card Styles */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #bbdefb, #90caf9);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #343a40, #23272b);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInFooter 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeInFooter {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-robot"></i> అడాప్టివ్ లెర్నింగ్
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">ఫీచర్లు</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#customization">అనుకూలీకరణ</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">సంప్రదించండి</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" href="index.html">లాగ్అవుట్</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Multi-Modal Content Section -->
+    <section id="multi-modal-content">
+        <div class="container">
+            <h2 class="section-heading">బహుళ-మోడల్ కంటెంట్</h2>
+            <div class="row g-4">
+                <div class="col-md-4" onclick="redirectToPage('btlearning.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">ఇంటరాక్టివ్ వీడియోలు</h5>
+                            <p class="card-text">నిలుపుదల మరియు అవగాహనను పెంపొందించడం ద్వారా అభ్యాసకులు పరస్పర చర్య చేయడానికి మరియు ఎంపికలు చేయడానికి అనుమతించే వీడియోలను ఆకట్టుకోవడం.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('btest.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">స్పీచ్ థెరపీ</h5>
+                            <p class="card-text">సురక్షితమైన వాతావరణంలో ప్రయోగాత్మక అనుభవాన్ని అందించే వాస్తవిక అనుకరణలు, ఆచరణాత్మక అభ్యాసానికి అనువైనవి.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('games.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">గేమిఫైడ్ టాస్క్‌లు</h5>
+                            <p class="card-text">అభ్యాసకులను ప్రేరేపించడానికి మరియు వారి అనుభవాన్ని మెరుగుపరచడానికి గేమ్ మెకానిక్‌లను చేర్చే ఆహ్లాదకరమైన మరియు ఆకర్షణీయమైన పనులు.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('baudio.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">ఆడియో ఆధారిత శిక్షణ</h5>
+                            <p class="card-text">శ్రవణ అభ్యాసకులను అందించడానికి మరియు అభ్యాసంలో సౌలభ్యాన్ని అందించడానికి ఆడియో కంటెంట్‌ను ఉపయోగించుకునే శిక్షణ మాడ్యూల్స్.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('bgraphics.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">విజువల్ ఎయిడ్స్</h5>
+                            <p class="card-text">విజువల్ లెర్నింగ్‌కు మద్దతు ఇవ్వడానికి మరియు గ్రహణశక్తిని పెంపొందించడానికి ఇన్ఫోగ్రాఫిక్స్, చార్ట్‌లు మరియు చిత్రాలను చేర్చడం.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('bopp.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">సహకార ప్రాజెక్టులు</h5>
+                            <p class="card-text">అభ్యాసకులు ప్రాజెక్ట్‌లపై కలిసి పని చేయడానికి, జట్టుకృషిని మరియు కమ్యూనికేషన్ నైపుణ్యాలను పెంపొందించడానికి అవకాశాలు.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024అడాప్టివ్ లెర్నింగ్. అన్ని హక్కులు ప్రత్యేకించబడ్డాయి. | <a href="#">గోప్యతా విధానం</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function redirectToPage(page) {
+        window.location.href = page;
+    }
+</script>
+<script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

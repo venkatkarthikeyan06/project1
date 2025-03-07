@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Adaptive Mastering Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #010509;
+            text-transform: uppercase;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #020e1b, #0056b3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-right: 20px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffd700 !important;
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler {
+            border-color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0056b3, #1e90ff, #030507);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 5px solid #0056b3;
+            position: relative;
+            background-attachment: fixed;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            animation: fadeIn 2s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-light {
+            background-color: #ffd700;
+            color: #000103;
+            border: 2px solid #ffd700;
+            font-size: 1.2rem;
+            padding: 10px 25px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-light:hover {
+            background-color: #ffc107;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features Section */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #bbdefb, #90caf9);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Customization Section */
+        #customization {
+            background: linear-gradient(135deg, #f4f9ff, #e6f3ff);
+            padding: 60px 0;
+        }
+
+        .customization-list li {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .customization-list li::before {
+            content: "\2022";
+            color: #007bff;
+            font-weight: bold;
+            display: inline-block;
+            width: 1rem;
+        }
+
+        img {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #343a40, #23272b);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInFooter 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeInFooter {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffc107;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn-light {
+                font-size: 1rem;
+                padding: 8px 20px;
+            }
+
+            .customization-list {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .nav-link {
+                font-size: 1rem;
+            }
+
+            .footer {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-robot"></i> అడాప్టివ్ లెర్నింగ్
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">ఫీచర్లు</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#customization">అనుకూలీకరణ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">సంప్రదించండి</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" href="index.html">లాగ్అవుట్</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2 id="welcomeMessage" class="welcome-message"></h2> <!-- Placeholder for welcome message -->
+            <h1>న్యూరోడైవర్స్ అభ్యాసకులకు సాధికారత</h1>
+            <p class="lead">సమగ్ర విద్య కోసం రూపొందించబడిన అనుకూల మాస్టరింగ్ ప్లాట్‌ఫారమ్.</p>
+            <a href="#features" class="btn btn-light btn-lg">మరింత తెలుసుకోండి</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-heading">వేదిక ఫీచర్లు</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">వ్యక్తిగతీకరించిన అభ్యాసం</h5>
+                            <p class="card-text">అభిజ్ఞా, ఇంద్రియ మరియు భావోద్వేగ ప్రతిస్పందనల ఆధారంగా ప్రత్యేకమైన ప్రొఫైల్‌లను రూపొందించడానికి AIని ప్రభావితం చేస్తుంది.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('real-time.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">నిజ-సమయ అనుకూలత</h5>
+                            <p class="card-text">వ్యక్తిగత నిశ్చితార్థం మరియు పనితీరు స్థాయిలకు అనుగుణంగా నేర్చుకోవడం కంటెంట్‌ను డైనమిక్‌గా సర్దుబాటు చేస్తుంది</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" onclick="redirectToPage('multi-model.html')">
+                    <div class="card p-3">
+                        <div class="card-body">
+                            <h5 class="card-title">బహుళ-మోడల్ కంటెంట్</h5>
+                            <p class="card-text">వివిధ అభ్యాస శైలులకు అనుగుణంగా వీడియోలు, అనుకరణలు, గేమిఫైడ్ టాస్క్‌లు మరియు ఆడియో-ఆధారిత శిక్షణను కలిగి ఉంటుంది.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customization Section -->
+    <section id="customization">
+        <div class="container">
+            <h2 class="section-heading">అనుకూలీకరించదగిన అభ్యాస అనుభవం</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p>విద్యార్థులు తమ ఇంద్రియ ప్రాధాన్యతలకు సరిపోయేలా ఇంటర్‌ఫేస్‌ను అనుకూలీకరించవచ్చు:</p>
+                    <ul class="customization-list">
+                        <li>టెక్స్ట్-టు-స్పీచ్, స్పీచ్-టు-టెక్స్ట్ మరియు డైస్లెక్సియా-ఫ్రెండ్లీ ఫాంట్‌లను ఉపయోగించండి.</li>
+                        <li>టెక్స్ట్-టు-స్పీచ్, స్పీచ్-టు-టెక్స్ట్ మరియు డైస్లెక్సియా-ఫ్రెండ్లీ ఫాంట్‌లను ఉపయోగించండి.</li>
+                        <li>వ్యక్తిగతీకరించిన సెట్టింగ్‌లతో పరధ్యానాన్ని తగ్గించండి.</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <img src="img.png" alt="Customizable Interface" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Adaptive Learning. All rights reserved. | <a href="#">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check for token in local storage
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/auth.html'; // Redirect to login if not authenticated
+        } else {
+            try {
+                // Decode the token to get user information
+                const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+                const userName = payload.name; // Get the user's name from the payload
+                document.getElementById('welcomeMessage').textContent = `Hello, ${userName}!`;
+            } catch (error) {
+                console.error('Error decoding token:', error);
+                localStorage.removeItem('token'); // Remove invalid token
+                window.location.href = '/auth.html'; // Redirect to login
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('token'); // Remove token from local storage
+            window.location.href = '/auth.html'; // Redirect to login page
+        });
+
+        function redirectToPage(page) {
+            window.location.href = page;
+        }
+
+    </script> -->
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

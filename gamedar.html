@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        #wordDisplay {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 1.5em;
+            color: green;
+        }
+        #hangman {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #letters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .letter {
+            font-size: 1.5em;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .letter.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="Time_left">Time_left: 6</div>
+        <div id="wordDisplay">_ _ _ _ _ _</div>
+        <div id="letters"></div>
+        <div id="message"></div>
+    </div>
+    <script>
+        const words = ["python", "java", "kotlin", "javascript", "hangman", "programming"];
+        let word = words[Math.floor(Math.random() * words.length)];
+        let wordDisplay = document.getElementById('wordDisplay');
+        let hangman = document.getElementById('hangman');
+        let lettersContainer = document.getElementById('letters');
+        let message = document.getElementById('message');
+        let guessedLetters = [];
+        let tries = 6;
+
+        function displayWord() {
+            let display = word.split('').map(letter => guessedLetters.includes(letter) ? letter : '_').join(' ');
+            wordDisplay.textContent = display;
+        }
+
+        function displayLetters() {
+            lettersContainer.innerHTML = '';
+            for (let i = 65; i <= 90; i++) {
+                let letter = String.fromCharCode(i).toLowerCase();
+                let letterElement = document.createElement('span');
+                letterElement.textContent = letter;
+                letterElement.classList.add('letter');
+                if (guessedLetters.includes(letter)) {
+                    letterElement.classList.add('disabled');
+                } else {
+                    letterElement.addEventListener('click', () => guessLetter(letter));
+                }
+                lettersContainer.appendChild(letterElement);
+            }
+        }
+
+        function guessLetter(letter) {
+            guessedLetters.push(letter);
+            if (!word.includes(letter)) {
+                tries--;
+                Time_left.textContent =` Time_left: ${tries}`;
+            }
+            displayWord();
+            displayLetters();
+            checkGameStatus();
+        }
+
+        function checkGameStatus() {
+            if (word.split('').every(letter => guessedLetters.includes(letter))) {
+                message.textContent = 'Congratulations, you guessed the word!';
+                disableLetters();
+            } else if (tries === 0) {
+                message.textContent = `Sorry, you ran out of tries. The word was ${word}.`;
+                disableLetters();
+            }
+        }
+
+        function disableLetters() {
+            document.querySelectorAll('.letter').forEach(letter => letter.classList.add('disabled'));
+        }
+
+        displayWord();
+        displayLetters();
+    </script>
+</body>
+</html>

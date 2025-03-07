@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio-Based Training for Diverse Learning Styles</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+            padding-top: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        .form-section {
+            background:#a9c0ff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            border: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #0056b3, #003f7f);
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lead {
+            font-style: italic;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>విభిన్న అభ్యాస శైలుల కోసం ఆడియో-ఆధారిత శిక్షణ</h1>
+    <p class="lead">ఆడియో కంటెంట్‌తో పాల్గొనండి మరియు మీ జ్ఞానాన్ని సజావుగా పరీక్షించుకోండి.</p>
+</header>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="form-section">
+                <h2 class="text-center">ఆడియో శిక్షణ మాడ్యూల్ - Level <span id="level">1</span></h2>
+                <audio id="audioPlayer" class="w-100 mt-3 mb-4" controls>
+                    <source id="audioSource" src="tel1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <div id="questions" class="mt-4" style="display: none;">
+                    <h3 class="mb-3">ప్రశ్నలు</h3>
+                    <form id="quizForm">
+                        <div class="mb-4">
+                            <label class="form-label">1. What was the main topic discussed in the audio?</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="a" id="q1a">
+                                <label class="form-check-label" for="q1a">A. Topic A</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="b" id="q1b">
+                                <label class="form-check-label" for="q1b">B. Topic B</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="c" id="q1c">
+                                <label class="form-check-label" for="q1c">C. Topic C</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" value="d" id="q1d">
+                                <label class="form-check-label" for="q1d">D. Topic D</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">2. Which of the following is a key point mentioned?</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="a" id="q2a">
+                                <label class="form-check-label" for="q2a">A. Key Point 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="b" id="q2b">
+                                <label class="form-check-label" for="q2b">B. Key Point 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="c" id="q2c">
+                                <label class="form-check-label" for="q2c">C. Key Point 3</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" value="d" id="q2d">
+                                <label class="form-check-label" for="q2d">D. Key Point 4</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Contact us: support@example.com | Phone: (123) 456-7890</p>
+</footer>
+
+<script>
+   
+    let currentLevel = 1;
+    const audio = document.getElementById('audioPlayer');
+    const questionsDiv = document.getElementById('questions');
+    const levelSpan = document.getElementById('level');
+    const audioSource = document.getElementById('audioSource');
+    const quizForm = document.getElementById('quizForm');
+
+    // Define levels, their corresponding audio files, questions, and correct answers
+    const levels = [
+        {
+            audio: 'tel1.mp3',
+            correctAnswers: { q1: 'b', q2: 'a' },
+            questions: [
+                {
+                    question: " పై ఆడియో మీకు అర్థమైందా?",
+                    options: ["Key Point 1", " అవును", " నం", "Key Point 4"],
+                },
+                {
+                    question: "మీరు తదుపరి దానికి వెళ్లాలనుకుంటున్నారా?",
+                    options: ["Key Point 1", " అవును", " నం", "Key Point 4"],
+                }
+            ]
+        },
+        {
+            audio: 'tel6.mp3',
+            correctAnswers: { q1: 'c', q2: 'd' },
+            questions: [
+                {
+                    question: "1. అడవిలో చోటు చిలుక ఏ వ్యాపారం నడుపుతున్నాడు?",
+                    options: ["టీ దుకాణం.", "జలేబీ వ్యాపారం", "ఫ్రూట్ స్టాల్.", "బేకరీ."],
+                },
+                {
+                    question: "2.చిచ్చు కాకి చోటు చిలుకను ఎందుకు ద్వేషించింది?",
+                    options: ["ఎందుకంటే చోటు చిలుక ఆమె జిలేబీలను దొంగిలించింది.", "ఎందుకంటే చోటు చిలుక ఆమె కంటే ఎక్కువ విజయాన్ని సాధించింది.", "ఆమె చోటు చిలుకను ఎందుకు ద్వేషిస్తుందో ప్రస్తావించలేదు.", "చోటు చిలుక ఆమెను అవమానించినందున.   "],
+                }
+            ]
+        },
+        {
+            audio: 'tel5.mp3',
+            correctAnswers: { q1: 'b', q2: 'a' },
+            questions: [
+                {
+                    question: "1.స్వార్థపూరితమైన చెట్టు ఎందుకు బలహీనమైందని మీరు అనుకుంటున్నారు",
+                    options: ["ఎందుకంటే ఇది పండ్లు పెరగడం మానేసింది.", "ఎందుకంటే ఇది పక్షులు మరియు జంతువుల నుండి మద్దతు పొందలేదు  . ", "ఎందుకంటే ఇది మానవులచే నరికివేయబడింది.", "ఎందుకంటే అది చెడ్డ ప్రదేశంలో పెరిగింది. "],
+                },
+                {
+                    question: "2.నిస్వార్థత గురించి కథ ఏ పాఠం నేర్పుతుంది?",
+                    options: ["వృద్ధికి నిస్వార్థత అవసరం లేదు.", "స్వార్థపూరితంగా ఉండటం మిమ్మల్ని విజయవంతం చేయగలదు.", "నిస్వార్థత పరస్పర పెరుగుదల మరియు సామరస్యాన్ని పెంపొందిస్తుంది. ", "నిస్వార్థత సంఘర్షణకు దారితీస్తుంది."],
+                }
+            ]
+        }
+
+        // Additional levels here...
+    ];
+
+    // Display questions when the audio ends
+    audio.addEventListener('ended', function () {
+        populateQuestions();
+        questionsDiv.style.display = 'block';
+    });
+
+    // Populate the quiz form with the current level's questions
+    function populateQuestions() {
+        const currentQuestions = levels[currentLevel - 1].questions;
+
+        // Clear existing questions
+        quizForm.innerHTML = '';
+
+        // Add new questions
+        currentQuestions.forEach((q, index) => {
+            const questionNumber = index + 1;
+            const questionHtml = `
+                <div class="mb-4">
+                    <label class="form-label">${questionNumber}. ${q.question}</label><br>
+                    ${q.options.map((option, i) => `
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q${questionNumber}" value="${String.fromCharCode(97 + i)}" id="q${questionNumber}${String.fromCharCode(97 + i)}">
+                            <label class="form-check-label" for="q${questionNumber}${String.fromCharCode(97 + i)}">${String.fromCharCode(65 + i)}. ${option}</label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            quizForm.innerHTML += questionHtml;
+        });
+
+        // Add submit button
+        quizForm.innerHTML += `<button type="submit" class="btn btn-primary w-100">Submit</button>`;
+    }
+
+    // Handle quiz form submission
+    quizForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        let score = 0;
+        const totalQuestions = levels[currentLevel - 1].questions.length;
+
+        const currentAnswers = levels[currentLevel - 1].correctAnswers;
+        for (let i = 1; i <= totalQuestions; i++) {
+            if (document.querySelector(`input[name="q${i}"]:checked`)?.value === currentAnswers[`q${i}`]) {
+                score++;
+            }
+        }
+
+        const percentage = (score / totalQuestions) * 100;
+        if (percentage >= 40) {
+            alert('Congratulations! You scored ' + percentage + '%. Proceeding to the next level...');
+
+            // Move to the next level if available
+            if (currentLevel < levels.length) {
+                currentLevel++;
+                levelSpan.textContent = currentLevel;
+                audioSource.src = levels[currentLevel - 1].audio;
+                audio.load();
+                questionsDiv.style.display = 'none';
+            } else {
+                alert('Congratulations! You have completed all levels.');
+            }
+        } else {
+            alert('You scored ' + percentage + '%. Keep trying!');
+        }
+    });
+</script>
+
+
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+
+</body>
+</html>
+
+    

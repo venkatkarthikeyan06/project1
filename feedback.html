@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Feedback & Scoreboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #d6eaff);
+            font-family: 'Poppins', sans-serif;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center text-primary">Real-Time Feedback</h1>
+        <div id="feedback-section" class="card p-4">
+            <h2 class="text-center text-secondary">Your Choices</h2>
+            <ul id="feedback-list" class="list-group">
+                <!-- Dynamic Feedback -->
+            </ul>
+        </div>
+
+        <div id="scoreboard-section" class="card p-4">
+            <h2 class="text-center text-secondary">Scoreboard</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboard-table">
+                    <!-- Dynamic Scoreboard -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch personalization data
+                const feedbackResponse = await fetch('/api/personalization');
+                const feedbackData = await feedbackResponse.json();
+                const feedbackList = document.getElementById('feedback-list');
+
+                if (feedbackData.length === 0) {
+                    feedbackList.innerHTML = '<li class="list-group-item">No feedback data available.</li>';
+                } else {
+                    feedbackData.forEach((item, index) => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item';
+                        listItem.innerText = `${index + 1}. Name: ${item.name}, Age: ${item.age}, Course Level: ${item.courseLevel}, Video Type: ${item.videoType}, Content: ${item.learningContent}, Language: ${item.language}`;
+                        feedbackList.appendChild(listItem);
+                    });
+                }
+
+                // Fetch scoreboard data
+                const scoreboardResponse = await fetch('/api/scoreboard');
+                const scoreboardData = await scoreboardResponse.json();
+                const scoreboardTable = document.getElementById('scoreboard-table');
+
+                if (scoreboardData.length === 0) {
+                    scoreboardTable.innerHTML = '<tr><td colspan="3" class="text-center">No scores available.</td></tr>';
+                } else {
+                    scoreboardData.forEach((score, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${score.score}</td>
+                            <td>${new Date(score.date).toLocaleString()}</td>
+                        `;
+                        scoreboardTable.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                 // Generate random placeholder scoreboard
+    const placeholderScores = Array.from({ length: 5 }, (_, index) => ({
+        name: `User ${index + 1}`,
+        score: Math.floor(Math.random() * 100) + 1, // Random score between 1 and 100
+        date: new Date().toLocaleDateString(), // Current date as a placeholder
+    }));
+
+    // Display placeholder scores
+    const scoreboardTable = document.getElementById('scoreboard-table');
+    scoreboardTable.innerHTML = `
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date</th>
+        </tr>
+    `;
+    placeholderScores.forEach(score => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${score.name}</td>
+            <td>${score.score}</td>
+            <td>${score.date}</td>
+        `;
+        scoreboardTable.appendChild(row);
+    });
+
+    // Optionally display a message indicating placeholder data
+    const feedbackDiv = document.getElementById('feedback-div');
+    feedbackDiv.innerHTML = `
+        <div class="alert alert-warning" role="alert">
+            Failed to load live data. Displaying random placeholder scores.
+        </div>
+    `;
+            }
+        });
+    </script>
+</body>
+</html>

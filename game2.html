@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #fff;
+        }
+        #winMessage {
+            display: none;
+            font-size: 2em;
+            color: green;
+            position: absolute;
+            top: 20px;
+        }
+        #exitButton, #newMazeButton {
+            position: absolute;
+            top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #exitButton {
+            right: 20px;
+        }
+        #newMazeButton {
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mazeCanvas" width="400" height="400"></canvas>
+    <div id="winMessage">You win!</div>
+    <button id="exitButton" onclick="exitGame()">Exit</button>
+    <button id="newMazeButton" onclick="generateNewMaze()">Generate New Maze</button>
+    <script>
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        let level = 1;
+        let mazeSize = 5;
+        let cellSize = canvas.width / mazeSize;
+        let maze = generateMaze(mazeSize);
+        let player = { x: 0, y: 0 };
+
+        function generateMaze(size) {
+            const maze = Array(size).fill().map(() => Array(size).fill(0));
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    maze[i][j] = Math.random() > 0.7 ? 1 : 0;
+                }
+            }
+            maze[0][0] = 0;
+            maze[size - 1][size - 1] = 0;
+            return maze;
+        }
+
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < mazeSize; i++) {
+                for (let j = 0; j < mazeSize; j++) {
+                    if (maze[i][j] === 1) {
+                        ctx.fillStyle = '#000';
+                        ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+            // Highlight start point
+            ctx.fillStyle = '#0f0';
+            ctx.fillRect(0, 0, cellSize, cellSize);
+            // Highlight end point
+            ctx.fillStyle = '#f00';
+            ctx.fillRect((mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
+            // Draw player
+            ctx.fillStyle = '#00f';
+            ctx.fillRect(player.x * cellSize, player.y * cellSize, cellSize, cellSize);
+        }
+
+        function movePlayer(dx, dy) {
+            const newX = player.x + dx;
+            const newY = player.y + dy;
+            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 0) {
+                player.x = newX;
+                player.y = newY;
+                drawMaze();
+                if (player.x === mazeSize - 1 && player.y === mazeSize - 1) {
+                    levelUp();
+                }
+            }
+        }
+
+        function levelUp() {
+            level++;
+            mazeSize += 5;
+            cellSize = canvas.width / mazeSize;
+            maze = generateMaze(mazeSize);
+            player = { x: 0, y: 0 };
+            drawMaze();
+            document.getElementById('winMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('winMessage').style.display = 'none';
+            }, 2000);
+        }
+
+        function exitGame() {
+            document.body.innerHTML = '<h1>Game Over</h1>';
+        }
+
+        function generateNewMaze() {
+            maze = generateMaze(mazeSize);
+            player = { x: 0, y: 0 };
+            drawMaze();
+            document.getElementById('winMessage').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        drawMaze();
+    </script>
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>

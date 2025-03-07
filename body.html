@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join our peaceful yoga classes and enhance your flexibility, strength, and relaxation.">
+    <title>Yoga with Serenity</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <!-- Hero Section -->
+    <header>
+        <div class="container">
+            <h1>Yoga with Serenity</h1>
+            <p>Experience peace, flexibility, and strength with our guided yoga classes</p>
+            
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-heading">About Our Yoga Classes</h2>
+            <p>Our yoga classes are designed for every skill level. Whether you're just starting or an advanced yogi, we have something for you.</p>
+            <p>Our certified instructors will guide you through various styles of yoga that improve your flexibility, strength, and mental well-being. Join us for a calming experience on and off the mat!</p>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section id="classes" class="section">
+        <div class="container">
+            <h2 class="section-heading">Our Classes</h2>
+            <div class="class-list">
+                <div class="class-item card" onclick="redirectToPage('beginner.html')">
+                    <h3 >Beginner Yoga</h3>
+                    <p>A gentle introduction to yoga focusing on basic postures, breathing, and relaxation techniques.</p>
+                </div>
+                <div class="class-item card" onclick="redirectToPage('medium.html')" >
+                    <h3>Medium Flow</h3>
+                    <p>Dynamic flow that synchronizes movement with breath to strengthen, stretch, and energize your body.</p>
+                </div>
+                <div class="class-item card" onclick="redirectToPage('hard.html')">
+                    <h3>Advance level Yoga</h3>
+                    <p>Slow-paced, gentle yoga focusing on relaxation and healing with deep breathing and supported postures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="section">
+        <div class="container">
+            <h2 class="section-heading">Class Schedule</h2>
+            <ul>
+                <li>Monday - Friday: 7:00 AM - 8:00 AM (Vinyasa Flow)</li>
+                <li>Monday - Friday: 6:00 PM - 7:00 PM (Beginner Yoga)</li>
+                <li>Saturday: 10:00 AM - 11:00 AM (Restorative Yoga)</li>
+            </ul>
+        </div>
+    </section>
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Yoga with Serenity | All Rights Reserved</p>
+    </footer>
+    <script>
+        function redirectToPage(page) {
+            window.location.href = page;
+
+        }
+
+    </script>
+
+</body>
+</html>

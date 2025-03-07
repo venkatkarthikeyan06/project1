@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition and Eye Movement Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+    <script async src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript" onload="onOpenCvReady()"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        video {
+            display: none;
+        }
+
+        canvas {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: popIn 1s ease-in-out;
+        }
+
+        p#message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Add glow effect */
+        canvas {
+            border: 2px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Smooth animations for buttons or interactive elements */
+        button {
+            background: #ffd700;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #000;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ffc107;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h2>RUB YOUR HANDS<br/>KEEP IT ON EYES<br/>IT'S MEDITATION TIME</h2>
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <canvas id="canvas" width="720" height="560"></canvas>
+    <p id="message"></p>
+
+    <script>
+        // Function called when OpenCV.js is ready
+        function onOpenCvReady() {
+            console.log("OpenCV.js is ready!");
+            detectFace();
+        }
+
+        async function setupCamera() {
+            const video = document.getElementById('video');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+
+            return new Promise((resolve) => {
+                video.onloadedmetadata = () => {
+                    resolve(video);
+                };
+            });
+        }
+
+        async function detectFace() {
+            const video = await setupCamera();
+            video.play();
+
+            const model = await blazeface.load();  // Correct function to load BlazeFace model
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            async function detect() {
+                const predictions = await model.estimateFaces(video, false);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                predictions.forEach(prediction => {
+                    ctx.beginPath();
+                    ctx.rect(
+                        prediction.topLeft[0],
+                        prediction.topLeft[1],
+                        prediction.bottomRight[0] - prediction.topLeft[0],
+                        prediction.bottomRight[1] - prediction.topLeft[1]
+                    );
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = 'red';
+                    ctx.stroke();
+                });
+
+                if (predictions.length > 0) {
+                    // Call the function to check eye movement
+                    checkEyeMovement(video);
+                }
+
+                requestAnimationFrame(detect);
+            }
+
+            detect();
+        }
+
+        async function checkEyeMovement(video) {
+            if (video.readyState === 4) { // Ensure the video is ready
+                // Capture video frame
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                // Manually create a Mat object from ImageData
+                const src = cv.matFromArray(imageData.height, imageData.width, cv.CV_8UC4, imageData.data);
+                const gray = new cv.Mat();
+                cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+
+                // Load Haar Cascade for eye and face detection
+                const eyeCascade = new cv.CascadeClassifier();
+                const faceCascade = new cv.CascadeClassifier();
+
+                eyeCascade.load('haarcascade_eye.xml');  // Ensure you have this file available
+                faceCascade.load('haarcascade_frontalface_default.xml'); // Ensure this file is available
+
+                const eyes = new cv.RectVector();
+                const faces = new cv.RectVector();
+
+                faceCascade.detectMultiScale(gray, faces, 1.1, 3, 0);
+
+                for (let i = 0; i < faces.size(); i++) {
+                    const face = faces.get(i);
+                    const roiGray = gray.roi(face);
+                    eyeCascade.detectMultiScale(roiGray, eyes, 1.1, 3, 0);
+
+                    if (eyes.size() > 0) {
+                        document.getElementById('message').textContent = "Eyes Detected!";
+                    } else {
+                        document.getElementById('message').textContent = "Eyes Closed!";
+                    }
+                    roiGray.delete();
+                }
+
+                // Clean up
+                src.delete();
+                gray.delete();
+                eyes.delete();
+                faces.delete();
+            } else {
+                console.warn("Video not ready for processing.");
+            }
+        }
+
+        
+    </script>
+    <script src="https://widget.cxgenie.ai/widget.js" data-aid="818e31f6-8f07-40c6-b542-5bbe29a36bee" data-lang="en"></script>
+</body>
+</html>
